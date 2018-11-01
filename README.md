@@ -3,7 +3,7 @@ It sets up docker and docker-compose.
 Docker is used to deploy these imgages:
 - glassfish 5 - application server for Dev usage
 - postgresql 11 - relational database for Dev usage
-- adminer - web app lication to administer database
+- adminer - web application to administer database
 - gitea - simple gitlab-like application for version control system
 - mariadb - database for gitea
 
