@@ -1,0 +1,103 @@
+version: "3"
+services:
+  web:
+    image: pdbs/glassfish
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1.3"
+          memory: 2560M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:80"
+      - "8181:8181"
+      - "4848:4848"
+      - "9009:9009"
+    networks:
+      - webnet
+    volumes:
+      - "/web:/opt/glassfish/glassfish/domains"
+  db:
+    image: beatseed/postgres:11
+    environment:
+      POSTGRES_PASSWORD: example
+      PGDATA: /var/lib/postgresql/data/pgdata
+      LANG: "ru_RU.UTF-8"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.4"
+          memory: 1024M
+    volumes:
+      - "pgdata3:/var/lib/postgresql/data/pgdata"
+    networks:
+      - webnet
+  adminer:
+    image: adminer
+    ports:
+      - 8088:8080
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 64M
+    networks:
+      - webnet    
+  gitea:
+    image: gitea/gitea:1.3.2
+    volumes:
+      - gitdata:/data
+    ports:
+      - "3000:3000"
+      - "2222:22"
+    depends_on:
+      - gitea_db
+    networks:
+      - webnet    
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 64M
+    
+  gitea_db:
+    image: mariadb:10
+    
+    environment:
+      - MYSQL_ROOT_PASSWORD=changeme
+      - MYSQL_DATABASE=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=changeme
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - webnet      
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 64M
+      
+networks:
+  webnet:
+volumes:
+  pgdata3:
+    external: true  
+  mariadb:
+    external: true  
+  gitdata:
+    external: true  
