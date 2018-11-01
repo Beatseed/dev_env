@@ -25,6 +25,8 @@ services:
       POSTGRES_PASSWORD: example
       PGDATA: /var/lib/postgresql/data/pgdata
       LANG: "ru_RU.UTF-8"
+    ports:
+      - "5432:5432"
     deploy:
       restart_policy:
         condition: on-failure
@@ -37,7 +39,7 @@ services:
           cpus: "0.4"
           memory: 1024M
     volumes:
-      - "pgdata3:/var/lib/postgresql/data/pgdata"
+      - "pgdata:/var/lib/postgresql/data/pgdata"
     networks:
       - webnet
   adminer:
@@ -95,7 +97,7 @@ services:
 networks:
   webnet:
 volumes:
-  pgdata3:
+  pgdata:
     external: true  
   mariadb:
     external: true  

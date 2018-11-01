@@ -11,10 +11,10 @@ Services became available on your local machine (localhost). All docker services
 and available to each other by service names.
 
 ### glassfish 5
-Forwarded ports: 4848 admin panel; 80 http; 8181 https. Domain data(configuration, logs etc.) available in the directory web. Service names - lab_web,web
+Forwarded ports: 4848 admin panel; 80 http; 8181 https. Domain data(configuration, logs etc.) reachable in the local machine directory ./web. Service names - lab_web,web
 
 ### postgresql 11
-Has no forwarded ports. Postgresql database data available outside docker image in the vagrant VMs path /var/lib/docker/volumes/pgdata/_data. 
+Forwarded ports: 5432. Postgresql database data available outside docker image in the vagrant VMs path /var/lib/docker/volumes/pgdata/_data. 
 Login to vagrant VM to reach it. Service names - lab_db,db
 
 ### adminer
