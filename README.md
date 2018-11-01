@@ -10,7 +10,7 @@ Docker is used to deploy these imgages:
 Services became available on your local machine (localhost). All docker services share same network environment and are isolated from the host (vagrant VM) 
 and available to each other by service names.
 
-###glassfish 
+### glassfish 5
 Forwarded ports: 4848 admin panel; 80 http; 8181 https. Domain data(configuration, logs etc.) available in the directory web. Service names - lab_web,web
 
 ### postgresql 11
@@ -29,14 +29,14 @@ Has no forwarded ports. Service names - lab_gitea_db,gitea_db
 # Usage.
 Install vagrant on your local system https://www.vagrantup.com/
 Go to the directory of the project environment - 
-'''
+```
 cd glassfish
 vagrant plugin install vagrant-vbguest #installs a Vagrant plugin which automatically installs the host's VirtualBox Guest Additions on the guest system 
 vagrant up #starts this environment
 vagrant ssh #login to VM.
-'''
+```
 Other usefull commands:
-'''
+```
 vagrant reload --provision #reloads and provision changes to vagrant and docker configuration.
 vagrant halt #stops this environment
-'''
+```
